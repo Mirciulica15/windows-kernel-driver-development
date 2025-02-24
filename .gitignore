@@ -1,0 +1,4 @@
+*.vcxproj.user
+x64/
+WKDD/WKDD/
+.vs/
