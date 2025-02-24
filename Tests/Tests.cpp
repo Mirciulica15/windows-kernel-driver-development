@@ -60,7 +60,7 @@ namespace Tests
                 Assert::IsTrue(NT_SUCCESS(status), L"Work item should be enqueued successfully");
             }
 
-            Sleep(1000); // Allow some time for threads to process
+            Sleep(1000);
             TpUninit(&threadPool);
 
             Assert::IsTrue(ctx.Number > 0, L"Work items should be processed");
