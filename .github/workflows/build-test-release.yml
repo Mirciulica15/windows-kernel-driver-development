@@ -47,12 +47,12 @@ jobs:
 
       - name: Set short sha for release tag
         id: sha
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ steps.sha.outputs.sha_short }}
+          tag_name: ${{ env.sha_short }}
           files: WKDD.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
