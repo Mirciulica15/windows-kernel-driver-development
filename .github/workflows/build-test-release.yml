@@ -24,8 +24,8 @@ jobs:
 
       - name: Run Tests (x64)
         run: |
-          cd Tests/x64/Release
-          ./Tests.exe
+          cd WKDD/x64/Release
+          vstest.console.exe Tests.dll
 
       - name: Upload x64 Artifact
         uses: actions/upload-artifact@v4
