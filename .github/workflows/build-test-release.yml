@@ -24,8 +24,8 @@ jobs:
 
       - name: Run Tests (x64)
         run: |
-          nuget install Microsoft.VisualStudio.TestPlatform.ConsoleRunner -Version 16.9.0 -OutputDirectory ./tools
-          ./tools/Microsoft.VisualStudio.TestPlatform.ConsoleRunner.16.9.0/tools/netcoreapp2.1/any/vstest.console.exe WKDD/x64/Release/Tests.dll
+          nuget install Microsoft.TestPlatform -Version 17.13.0 -OutputDirectory ./tools
+          ./tools/Microsoft.TestPlatform.17.13.0/tools/netcoreapp3.1/any/vstest.console.exe WKDD/x64/Release/Tests.dll
 
       - name: Upload x64 Artifact
         uses: actions/upload-artifact@v4
