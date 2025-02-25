@@ -19,13 +19,13 @@ jobs:
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1.1
 
-      - name: Build Solution
+      - name: Build Solution (x64)
         run: msbuild WKDD/WKDD.sln /p:Configuration=Release /p:Platform=x64 /p:IncludePath="D:\a\windows-kernel-driver-development\windows-kernel-driver-development\WKDD" /p:DisablePrecompiledHeaders=true
 
       - name: Run Tests (x64)
         run: |
-          cd WKDD/x64/Release
-          vstest.console.exe Tests.dll
+          nuget install Microsoft.VisualStudio.TestPlatform.ConsoleRunner -Version 16.9.0 -OutputDirectory ./tools
+          ./tools/Microsoft.VisualStudio.TestPlatform.ConsoleRunner.16.9.0/tools/netcoreapp2.1/any/vstest.console.exe WKDD/x64/Release/Tests.dll
 
       - name: Upload x64 Artifact
         uses: actions/upload-artifact@v4
