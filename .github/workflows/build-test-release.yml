@@ -44,15 +44,19 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: WKDD-x64
-
+      
       - name: Set short sha for release tag
         id: sha
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-      
+
+      - name: Add a tag for the release
+        run: |
+          git tag ${{ env.sha_short }}
+          git push origin ${{ env.sha_short }}
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ env.sha_short }}
           files: WKDD.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
