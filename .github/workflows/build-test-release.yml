@@ -45,7 +45,7 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.sha }}
+          tag_name: ${{ github.sha::7 }}
           files: WKDD.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
