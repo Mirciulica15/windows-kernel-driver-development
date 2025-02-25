@@ -20,7 +20,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1.1
 
       - name: Build Solution
-        run: msbuild WKDD/WKDD.sln /p:Configuration=Debug /p:Platform=x64 /p:IncludePath="D:\a\windows-kernel-driver-development\windows-kernel-driver-development\WKDD"
+        run: msbuild WKDD/WKDD.sln /p:Configuration=Release /p:Platform=x64 /p:IncludePath="D:\a\windows-kernel-driver-development\windows-kernel-driver-development\WKDD"
 
       - name: Run Tests (x64)
         run: |
