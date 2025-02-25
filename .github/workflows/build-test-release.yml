@@ -42,10 +42,14 @@ jobs:
         with:
           name: WKDD-x64
 
+      - name: Set short sha for release tag
+        id: sha
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.sha::7 }}
+          tag_name: ${{ steps.sha.outputs.sha_short }}
           files: WKDD.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
