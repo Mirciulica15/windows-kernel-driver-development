@@ -42,14 +42,10 @@ jobs:
         with:
           name: WKDD-x64
 
-      - name: Get Commit SHA
-        id: commit_sha
-        run: echo "COMMIT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ env.COMMIT_SHA }}
+          tag_name: ${{ github.sha }}
           files: WKDD.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
