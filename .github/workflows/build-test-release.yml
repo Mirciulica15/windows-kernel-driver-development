@@ -25,20 +25,6 @@ jobs:
       - name: Run Tests (x64)
         run: |
           nuget install Microsoft.TestPlatform -Version 17.13.0 -OutputDirectory ./tools
-          ls ./tools
-          ls ./tools/Microsoft.TestPlatform.17.13.0/
-          ls ./tools/Microsoft.TestPlatform.17.13.0/tools/
-          ls ./tools/Microsoft.TestPlatform.17.13.0/tools/net462/
-          ls ./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Common7/
-          ls ./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Common7/IDE/
-          ls ./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Common7/IDE/CommonExtensions/
-          ls ./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Common7/IDE/CommonExtensions/Microsoft/
-          ls ./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Common7/IDE/CommonExtensions/Platform/
-          ls ./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Common7/IDE/Extensions/
-          ls ./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Common7/IDE/Extensions/TestPlatform/
-          ls ./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Common7/IDE/PrivateAssemblies/
-          ls "./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Team Tools/Dynamic Code Coverage Tools/"
-          ls "./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Team Tools/Dynamic Code Coverage Tools/amd64/"
           ./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Common7/IDE/Extensions/TestPlatform/vstest.console.exe WKDD/x64/Release/Tests.dll
 
       - name: Upload x64 Artifact
@@ -56,9 +42,14 @@ jobs:
         with:
           name: WKDD-x64
 
+      - name: Get Commit SHA
+        id: commit_sha
+        run: echo "COMMIT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ env.COMMIT_SHA }}
           files: WKDD.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
