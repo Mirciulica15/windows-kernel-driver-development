@@ -1,0 +1,67 @@
+name: Build, Test and Release
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        arch: [x64, ARM]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.3.1
+
+      - name: Build WKDD for ${{ matrix.arch }}
+        run: msbuild WKDD/WKDD.sln /p:Configuration=Release /p:Platform=${{ matrix.arch }}
+
+      - name: Build Tests for ${{ matrix.arch }}
+        run: msbuild Tests/Tests.vcxproj /p:Configuration=Release /p:Platform=${{ matrix.arch }} /p:IncludePath="D:\a\windows-kernel-driver-development\windows-kernel-driver-development\WKDD"
+
+      - name: Run Tests
+        run: .\Tests\Release\Tests.exe
+
+      - name: Upload WKDD Executable (${{ matrix.arch }})
+        uses: actions/upload-artifact@v4
+        with:
+          name: WKDD-${{ matrix.arch }}
+          path: WKDD/Release/WKDD.exe
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            artifacts/WKDD-x64/WKDD.exe
+            artifacts/WKDD-ARM/WKDD.exe
+          tag_name: ${{ github.ref_name }}
+          release_name: "WKDD ${{ github.ref_name }}"
+          body: |
+            **Changes in this release:**
+            - Add your changelog here.
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
