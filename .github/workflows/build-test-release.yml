@@ -29,11 +29,13 @@ jobs:
           ls ./tools/Microsoft.TestPlatform.17.13.0/
           ls ./tools/Microsoft.TestPlatform.17.13.0/tools/
           ls ./tools/Microsoft.TestPlatform.17.13.0/tools/net462/
-          ls ./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Common7
-          ls ./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Common7/IDE
-          ls "./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Team Tools"
-          vstest.console.exe WKDD/x64/Release/Tests.dll
-          ./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Common7/IDE/vstest.console.exe WKDD/x64/Release/Tests.dll
+          ls ./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Common7/
+          ls ./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Common7/IDE/
+          ls ./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Common7/IDE/CommonExtensions/
+          ls ./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Common7/IDE/Extensions/
+          ls ./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Common7/IDE/PrivateAssemblies/
+          ls "./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Team Tools/Dynamic Code Coverage Tools/"
+          ./tools/Microsoft.TestPlatform.17.13.0/tools/net462/Common7/IDE/Extensions/vstest.console.exe WKDD/x64/Release/Tests.dll
 
       - name: Upload x64 Artifact
         uses: actions/upload-artifact@v4
